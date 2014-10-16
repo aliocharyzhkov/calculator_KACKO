@@ -1,0 +1,23 @@
+{
+  "name": "calculator_KACKO",
+  "version": "0.1.0",
+  "scripts": {
+    "test": "jest -i"
+  },
+  "dependencies": {
+    "moment": "^2.8.3",
+    "cls": "^0.1.5",
+    "jquery": "^2.1.1"
+  },
+  "devDependencies": {
+    "jest-cli": "~0.1",
+    "webpack": "^1.4.7",
+    "webpack-dev-server": "^1.6.5"
+  },
+  "jest": {
+    "rootDir": "src",
+    "testPathIgnorePatterns": [
+      "/__tests__/[^/]*/.+"
+    ]
+  }
+}

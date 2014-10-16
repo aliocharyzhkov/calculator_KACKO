@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculator KACKO</title>
+  <script src="build/calculator.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    label > strong,
+    input[type="submit"] {
+      display: inline-block;
+      width: 200px;
+      margin: 5px 15px;
+    }
+    .drivers {
+      margin-left: 230px;
+    }
+  </style>
+</head>
+<body>
+  <form name="calculator_form">
+
+    <label><strong>Тип страховки</strong></label>
+    <input type="radio" name="insurance_type" checked="checked" value="Базовый"/>
+    <label>Базовый</label>
+    <input type="radio" name="insurance_type" value="Расширенный"/>
+    <label>Расширенный</label>
+    <input type="radio" name="insurance_type" value="Премиальный"/>
+    <label>Премиальный</label>
+
+    <br />
+
+    <label><strong>Скидка за счет КВ</strong></label>
+    <select name="discount_kv">
+      <option value="0">-</option>
+      <option value="1">1%</option>
+      <option value="2">2%</option>
+      <option value="3">3%</option>
+      <option value="4">4%</option>
+      <option value="5">5%</option>
+      <option value="6">6%</option>
+      <option value="7">7%</option>
+      <option value="8">8%</option>
+      <option value="9">9%</option>
+      <option value="10">10%</option>
+      <option value="11">11%</option>
+      <option value="12">12%</option>
+      <option value="13">13%</option>
+      <option value="14">14%</option>
+      <option value="15">15%</option>
+    </select>
+
+    <br />
+
+    <label><strong>Регион</strong></label>
+    <select name="region">
+      <option value="Москва и МО">Москва и МО</option>
+      <option value="Санкт-Петербург и область">Санкт-Петербург и область</option>
+      <option value="Тюменская область">Москва</option>
+    </select>
+
+    <br />
+
+    <label><strong>Тип страхователя</strong></label>
+    <select name="client_type">
+      <option value="Физическое лицо">Физическое лицо</option>
+    </select>
+
+    <br />
+
+    <label><strong>Марка</strong></label>
+    <select name="mark">
+      <option value="Toyota">Toyota</option>
+    </select>
+
+    <br />
+
+    <label><strong>Модель</strong></label>
+    <select name="model">
+      <option value="Auris">Auris</option>
+      <option value="Avensis">Avensis</option>
+      <option value="Camry">Camry</option>
+      <option value="Corolla">Corolla</option>
+      <option value="GT86">GT86</option>
+      <option value="Highlander">Highlander</option>
+      <option value="Hilux">Hilux</option>
+      <option value="Land Cruiser 150 Prado">Land Cruiser 150 Prado</option>
+      <option value="Land Cruiser 200">Land Cruiser 200</option>
+      <option value="Prius">Prius</option>
+      <option value="RAV 4">RAV 4</option>
+      <option value="Venza">Venza</option>
+      <option value="Verso">Verso</option>
+    </select>
+
+    <br />
+
+    <label><strong>Год выпуска</strong></label>
+    <select name="year">
+      <option value="2014">2014</option>
+      <option value="2013">2013</option>
+    </select>
+
+    <br />
+
+    <label><strong>Стоимость</strong></label>
+    <input type="text" name="insurance_money" />
+
+    <br />
+
+    <label><strong>GAP</strong></label>
+    <input type="checkbox" name="gap" value="1" />
+
+    <br />
+
+    <label><strong>ТС новое</strong></label>
+    <input type="checkbox" name="is_new" value="1" />
+
+    <br />
+
+    <label><strong>Без противоугонной сист.</strong></label>
+    <input type="checkbox" name="no_pss" value="1" />
+
+    <br />
+
+    <label><strong>Франшиза</strong></label>
+    <select name="franchise">
+      <option value="0"></option>
+      <option value="5000">5,000</option>
+      <option value="10000">10,000</option>
+      <option value="15000">15,000</option>
+      <option value="20000">20,000</option>
+      <option value="25000">25,000</option>
+      <option value="30000">30,000</option>
+    </select>
+
+    <br />
+
+    <label><strong>Мультидрайв</strong></label>
+    <input type="checkbox" name="is_multidrive" value="1" />
+
+    <br />
+
+    <label><strong>Число допущенных</strong></label>
+    <select name="drivers_num">
+      <option value="до 3-х включительно">до 3-х включительно</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8 и более">8 и более</option>
+    </select>
+
+    <br />
+    <table class="drivers">
+      <tr>
+        <th>Стаж</th>
+        <th>Возраст</th>
+      </tr>
+      <tr>
+        <td><input type="text" name="driver_experiences" /></td>
+        <td><input type="text" name="driver_ages" /></td>
+      </tr>
+      <tr>
+        <td><input type="text" name="driver_experiences" /></td>
+        <td><input type="text" name="driver_ages" /></td>
+      </tr>
+      <tr>
+        <td><input type="text" name="driver_experiences" /></td>
+        <td><input type="text" name="driver_ages" /></td>
+      </tr>
+      <tr>
+        <td><input type="text" name="driver_experiences" /></td>
+        <td><input type="text" name="driver_ages" /></td>
+      </tr>
+      <tr>
+        <td><input type="text" name="driver_experiences" /></td>
+        <td><input type="text" name="driver_ages" /></td>
+      </tr>
+    </table>
+
+    <br />
+
+    <label><strong>Рассрочка платежа</strong></label>
+    <select name="installments">
+      <option value="Единовременно">Единовременно</option>
+      <option value="2 платежа">2 платежа</option>
+      <option value="3 платежа">3 платежа</option>
+    </select>
+
+    <br />
+
+    <label><strong>Банк</strong></label>
+    <select name="bank">
+      <option value="">-</option>
+    </select>
+
+    <br />
+
+    <label><strong>Страховой тариф КАСКО</strong></label>
+    <span class="insurance_tariff result"></span>
+
+    <br />
+
+    <label><strong>Страховая премия КАСКО</strong></label>
+    <span class="insurance_premium result"></span>
+
+    <br />
+
+    <label><strong>ТС с прицепом</strong></label>
+    <input type="checkbox" name="trailer" value="1" />
+
+    <br />
+
+    <label><strong>Страховая сумма по ДСАГО</strong></label>
+    <select name="insurance_money_dsago">
+      <option value="0">-</option>
+      <option value="300000">300,000</option>
+      <option value="600000">600,000</option>
+      <option value="1000000">1,000,000</option>
+      <option value="1500000">1,500,000</option>
+      <option value="3000000">3,000,000</option>
+    </select>
+
+    <br />
+
+    <label><strong>Страховая премия по ДСАГО</strong></label>
+    <span class="insurance_premium_dsago result"></span>
+
+    <br />
+
+    <label><strong>Страховая сумма по НС (Фортуна)</strong></label>
+    <select name="insurance_money_fortune">
+      <option value="0">-</option>
+      <option value="120000">120,000</option>
+      <option value="200000">200,000</option>
+    </select>
+
+    <br />
+
+    <label><strong>Число застрахованных</strong></label>
+    <select name="insured_num_fortune">
+      <option value="0">-</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+
+    <br />
+
+    <label><strong>Страховая премия по НС (Фортуна)</strong></label>
+    <span class="insurance_premium_fortune result"></span>
+
+    <br />
+
+    <label><strong>Общая премия по договору</strong></label>
+    <span class="insurance_premium_total result"></span>
+
+    <br />
+
+    <input type="submit" value="Рассчитать" />
+  </form>
+</body>
+</html>
