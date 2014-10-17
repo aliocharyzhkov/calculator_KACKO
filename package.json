@@ -2,7 +2,9 @@
   "name": "calculator_KACKO",
   "version": "0.1.0",
   "scripts": {
-    "test": "jest -i"
+    "test": "jest -i",
+    "build-calc": "node ./node_modules/webpack/bin/webpack.js",
+    "start-server": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --progress --color"
   },
   "dependencies": {
     "moment": "^2.8.3",
