@@ -334,7 +334,7 @@ exports.getKb = function (input) {
 exports.getKprogram = function (input) {
   var region = input.region,
       action = input.action,
-      no_pss = input.no_pss,
+      with_pss = !input.no_pss,
       model =  input.model;
 
   // TODO: дозаполнить таблицу 'базовые тарифы'!I145:V600
@@ -342,7 +342,7 @@ exports.getKprogram = function (input) {
     "Москва и МО": {
       // action
       1: {
-        // no_pss
+        // with_pss
         0: {
           "Auris": 1.05,
           "Avensis": 1.04,
@@ -375,7 +375,7 @@ exports.getKprogram = function (input) {
         }
       },
       2: {
-        // no_pss
+        // with_pss
         0: {
           "Auris": 1.07,
           "Avensis": 1.06,
@@ -408,7 +408,7 @@ exports.getKprogram = function (input) {
         }
       },
       3: {
-        // no_pss
+        // with_pss
         0: {
           "Auris": 1.27,
           "Avensis": 1.26,
@@ -444,7 +444,7 @@ exports.getKprogram = function (input) {
     "Санкт-Петербург и область": {
       // action
       1: {
-        // no_pss
+        // with_pss
         0: {
           "Auris": 1.05,
           "Avensis": 1.04,
@@ -478,7 +478,7 @@ exports.getKprogram = function (input) {
       },
       // action
       2: {
-        // no_pss
+        // with_pss
         0: {
           "Auris": 1.07,
           "Avensis": 1.06,
@@ -512,7 +512,7 @@ exports.getKprogram = function (input) {
       },
       // action
       3: {
-        // no_pss
+        // with_pss
         0: {
           "Auris": 1.27,
           "Avensis": 1.26,
@@ -548,7 +548,7 @@ exports.getKprogram = function (input) {
     "Тюменская область": {
       // action
       1: {
-        // no_pss
+        // with_pss
         0: {
           "Auris": 1.05,
           "Avensis": 1.04,
@@ -582,7 +582,7 @@ exports.getKprogram = function (input) {
       },
       // action
       2: {
-        // no_pss
+        // with_pss
         0: {
           "Auris": 1.07,
           "Avensis": 1.06,
@@ -616,7 +616,7 @@ exports.getKprogram = function (input) {
       },
       // action
       3: {
-        // no_pss
+        // with_pss
         0: {
           "Auris": 1.27,
           "Avensis": 1.26,
@@ -651,5 +651,5 @@ exports.getKprogram = function (input) {
     }
   };
 
-  return coefficients[region][action][no_pss ? 1 : 0][model];
+  return coefficients[region][action][with_pss ? 1 : 0][model];
 };

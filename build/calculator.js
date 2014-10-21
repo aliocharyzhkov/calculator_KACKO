@@ -907,7 +907,7 @@
 	exports.getKprogram = function (input) {
 	  var region = input.region,
 	      action = input.action,
-	      no_pss = input.no_pss,
+	      with_pss = !input.no_pss,
 	      model =  input.model;
 
 	  // TODO: дозаполнить таблицу 'базовые тарифы'!I145:V600
@@ -915,7 +915,7 @@
 	    "Москва и МО": {
 	      // action
 	      1: {
-	        // no_pss
+	        // with_pss
 	        0: {
 	          "Auris": 1.05,
 	          "Avensis": 1.04,
@@ -948,7 +948,7 @@
 	        }
 	      },
 	      2: {
-	        // no_pss
+	        // with_pss
 	        0: {
 	          "Auris": 1.07,
 	          "Avensis": 1.06,
@@ -981,7 +981,7 @@
 	        }
 	      },
 	      3: {
-	        // no_pss
+	        // with_pss
 	        0: {
 	          "Auris": 1.27,
 	          "Avensis": 1.26,
@@ -1017,7 +1017,7 @@
 	    "Санкт-Петербург и область": {
 	      // action
 	      1: {
-	        // no_pss
+	        // with_pss
 	        0: {
 	          "Auris": 1.05,
 	          "Avensis": 1.04,
@@ -1051,7 +1051,7 @@
 	      },
 	      // action
 	      2: {
-	        // no_pss
+	        // with_pss
 	        0: {
 	          "Auris": 1.07,
 	          "Avensis": 1.06,
@@ -1085,7 +1085,7 @@
 	      },
 	      // action
 	      3: {
-	        // no_pss
+	        // with_pss
 	        0: {
 	          "Auris": 1.27,
 	          "Avensis": 1.26,
@@ -1121,7 +1121,7 @@
 	    "Тюменская область": {
 	      // action
 	      1: {
-	        // no_pss
+	        // with_pss
 	        0: {
 	          "Auris": 1.05,
 	          "Avensis": 1.04,
@@ -1155,7 +1155,7 @@
 	      },
 	      // action
 	      2: {
-	        // no_pss
+	        // with_pss
 	        0: {
 	          "Auris": 1.07,
 	          "Avensis": 1.06,
@@ -1189,7 +1189,7 @@
 	      },
 	      // action
 	      3: {
-	        // no_pss
+	        // with_pss
 	        0: {
 	          "Auris": 1.27,
 	          "Avensis": 1.26,
@@ -1224,7 +1224,7 @@
 	    }
 	  };
 
-	  return coefficients[region][action][no_pss ? 1 : 0][model];
+	  return coefficients[region][action][with_pss ? 1 : 0][model];
 	};
 
 
