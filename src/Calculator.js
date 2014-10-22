@@ -73,7 +73,6 @@ var Calculator = cls.extend({
     var period = '1 год',       // Срок
         is_longation = false,   // Договор является лонгацией
         ds_restrict = false,    // Эта константа не определена в Экселе, но используется в формулах
-        action = 1,             // Акция
 
     // Coefficients
 
