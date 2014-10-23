@@ -9,8 +9,6 @@ var Calculator = cls.extend({
     insurance_type,         // Вариант страховки (Базовый, Расширенный, Премиальный)
     discount_kv,            // Cкидка за счет КВ
     region,                 // Регион
-    client_type,            // Тип страхователя
-    mark,                   // Марка
     model,                  // Модель
     year,                   // Год выпуска
     insurance_money,        // Стоимость
@@ -30,8 +28,10 @@ var Calculator = cls.extend({
     this.insurance_type = insurance_type;
     this.discount_kv = parseInt(discount_kv, 10);
     this.region = region;
-    this.client_type = client_type;
-    this.mark = mark;
+    // Значение неизменно
+    this.client_type = "Физическое лицо";
+    // Значение неизменно
+    this.mark = "Toyota";
     this.model = model;
     this.year = parseInt(year, 10);
     this.insurance_money = parseInt(insurance_money, 10);

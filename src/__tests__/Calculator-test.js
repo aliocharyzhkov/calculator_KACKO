@@ -7,8 +7,6 @@ describe('Find final_tariff', function () {
     "Базовый",
     0,
     "Санкт-Петербург и область",
-    "физическое лицо",
-    "Toyota",
     "Prius",
     2014,
     3000000,

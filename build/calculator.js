@@ -69,8 +69,6 @@
 	      $('[name="insurance_type"]:checked').val(),
 	      $('[name="discount_kv"]').val(),
 	      $('[name="region"]').val(),
-	      $('[name="client_type"]').val(),
-	      $('[name="mark"]').val(),
 	      $('[name="model"]').val(),
 	      $('[name="year"]').val(),
 	      $('[name="insurance_money"]').val(),
@@ -84,16 +82,13 @@
 	      ages,
 	      $('[name="installments"]').val(),
 	      $('[name="trailer"]').is(':checked'),
-	      $('[name="bank"]').val(),
-	      $('[name="insurance_money_dsago"]').val(),
-	      $('[name="insurance_money_fortune"]').val(),
-	      $('[name="insured_num_fortune"]').val()
+	      $('[name="is_car_loan"]').is(':checked'),
+	      $('[name="insurance_money_dsago"]').val()
 	    );
 
 	    $('.insurance_tariff').html(calculator.getTariffPercent());
 	    $('.insurance_premium').html(calculator.getPremium());
 	    $('.insurance_premium_dsago').html(calculator.getPremiumDsago());
-	    $('.insurance_premium_fortune').html(calculator.getPremiumFortune());
 	    $('.insurance_premium_total').html(calculator.getPremiumTotal());
 	  });
 
@@ -118,8 +113,6 @@
 	    insurance_type,         // Вариант страховки (Базовый, Расширенный, Премиальный)
 	    discount_kv,            // Cкидка за счет КВ
 	    region,                 // Регион
-	    client_type,            // Тип страхователя
-	    mark,                   // Марка
 	    model,                  // Модель
 	    year,                   // Год выпуска
 	    insurance_money,        // Стоимость
@@ -133,16 +126,16 @@
 	    driver_ages,            // Возраст
 	    installments,           // Рассрочка платежаб
 	    trailer,                // С прицепом
-	    bank,                   // Банк
-	    insurance_money_dsago,  // Страховая сумма по ДСАГО
-	    insurance_money_fortune,// Страховая сумма по ДСАГО
-	    insured_num_fortune     // Число застрахованных
+	    is_car_loan,            // Кредитное ТС
+	    insurance_money_dsago   // Страховая сумма по ДСАГО
 	  ) {
 	    this.insurance_type = insurance_type;
 	    this.discount_kv = parseInt(discount_kv, 10);
 	    this.region = region;
-	    this.client_type = client_type;
-	    this.mark = mark;
+	    // Значение неизменно
+	    this.client_type = "Физическое лицо";
+	    // Значение неизменно
+	    this.mark = "Toyota";
 	    this.model = model;
 	    this.year = parseInt(year, 10);
 	    this.insurance_money = parseInt(insurance_money, 10);
@@ -160,10 +153,17 @@
 	    });
 	    this.installments = installments;
 	    this.trailer = trailer;
-	    this.bank = bank;
+
+	    // Любой банк
+	    if (is_car_loan) {
+	      // Здесь может быть любая непустая строка кроме "РГС Банк"
+	      this.bank = 'любой';
+	    // Нет банка
+	    } else {
+	      this.bank = '';
+	    }
+
 	    this.insurance_money_dsago = parseInt(insurance_money_dsago, 10);
-	    this.insurance_money_fortune = parseInt(insurance_money_fortune, 10);
-	    this.insured_num_fortune = parseInt(insured_num_fortune, 10);
 
 	    if (this.insurance_type === "Базовый") {
 	      this.action = 1;
@@ -182,7 +182,6 @@
 	    var period = '1 год',       // Срок
 	        is_longation = false,   // Договор является лонгацией
 	        ds_restrict = false,    // Эта константа не определена в Экселе, но используется в формулах
-	        action = 1,             // Акция
 
 	    // Coefficients
 
@@ -364,30 +363,8 @@
 
 	    return parseInt(coefficients[this.region][this.trailer ? 1 : 0][this.insurance_money_dsago], 10);
 	  },
-	  getPremiumFortune: function () {
-	    if (!this.insurance_money_fortune || !this.insured_num_fortune) {
-	      return 0;
-	    }
-
-	    var coefficients = {
-	      "Санкт-Петербург и область": {
-	        120000: 1000,
-	        200000: 2000
-	      },
-	      "Москва и МО": {
-	        120000: 1000,
-	        200000: 2000
-	      },
-	      "Тюменская область": {
-	        120000: 1000,
-	        200000: 2000
-	      }
-	    };
-
-	    return parseInt(coefficients[this.region][this.insurance_money_fortune] * this.insured_num_fortune, 10);
-	  },
 	  getPremiumTotal: function () {
-	    return this.getPremium() + this.getPremiumDsago() + this.getPremiumFortune();
+	    return this.getPremium() + this.getPremiumDsago();
 	  }
 	});
 

@@ -23,8 +23,6 @@ $(document).ready(function () {
       $('[name="insurance_type"]:checked').val(),
       $('[name="discount_kv"]').val(),
       $('[name="region"]').val(),
-      $('[name="client_type"]').val(),
-      $('[name="mark"]').val(),
       $('[name="model"]').val(),
       $('[name="year"]').val(),
       $('[name="insurance_money"]').val(),
