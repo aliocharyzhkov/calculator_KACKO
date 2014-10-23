@@ -39,15 +39,12 @@ $(document).ready(function () {
       $('[name="installments"]').val(),
       $('[name="trailer"]').is(':checked'),
       $('[name="is_car_loan"]').is(':checked'),
-      $('[name="insurance_money_dsago"]').val(),
-      $('[name="insurance_money_fortune"]').val(),
-      $('[name="insured_num_fortune"]').val()
+      $('[name="insurance_money_dsago"]').val()
     );
 
     $('.insurance_tariff').html(calculator.getTariffPercent());
     $('.insurance_premium').html(calculator.getPremium());
     $('.insurance_premium_dsago').html(calculator.getPremiumDsago());
-    $('.insurance_premium_fortune').html(calculator.getPremiumFortune());
     $('.insurance_premium_total').html(calculator.getPremiumTotal());
   });
 

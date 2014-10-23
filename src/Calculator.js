@@ -25,9 +25,7 @@ var Calculator = cls.extend({
     installments,           // Рассрочка платежаб
     trailer,                // С прицепом
     is_car_loan,            // Кредитное ТС
-    insurance_money_dsago,  // Страховая сумма по ДСАГО
-    insurance_money_fortune,// Страховая сумма по ДСАГО
-    insured_num_fortune     // Число застрахованных
+    insurance_money_dsago   // Страховая сумма по ДСАГО
   ) {
     this.insurance_type = insurance_type;
     this.discount_kv = parseInt(discount_kv, 10);
@@ -62,8 +60,6 @@ var Calculator = cls.extend({
     }
 
     this.insurance_money_dsago = parseInt(insurance_money_dsago, 10);
-    this.insurance_money_fortune = parseInt(insurance_money_fortune, 10);
-    this.insured_num_fortune = parseInt(insured_num_fortune, 10);
 
     if (this.insurance_type === "Базовый") {
       this.action = 1;
@@ -263,30 +259,8 @@ var Calculator = cls.extend({
 
     return parseInt(coefficients[this.region][this.trailer ? 1 : 0][this.insurance_money_dsago], 10);
   },
-  getPremiumFortune: function () {
-    if (!this.insurance_money_fortune || !this.insured_num_fortune) {
-      return 0;
-    }
-
-    var coefficients = {
-      "Санкт-Петербург и область": {
-        120000: 1000,
-        200000: 2000
-      },
-      "Москва и МО": {
-        120000: 1000,
-        200000: 2000
-      },
-      "Тюменская область": {
-        120000: 1000,
-        200000: 2000
-      }
-    };
-
-    return parseInt(coefficients[this.region][this.insurance_money_fortune] * this.insured_num_fortune, 10);
-  },
   getPremiumTotal: function () {
-    return this.getPremium() + this.getPremiumDsago() + this.getPremiumFortune();
+    return this.getPremium() + this.getPremiumDsago();
   }
 });
 

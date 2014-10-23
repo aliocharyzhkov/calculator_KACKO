@@ -23,9 +23,7 @@ describe('Find final_tariff', function () {
     "Единовременно",
     false,
     "",
-    1000000,
-    120000,
-    3
+    1000000
   );
 
   it('base_tariff is 0.090702', function () {
@@ -44,12 +42,8 @@ describe('Find final_tariff', function () {
     expect(calculator.getPremiumDsago()).toBe(5900);
   });
 
-  it('insurance premium fortune is 3000', function () {
-    expect(calculator.getPremiumFortune()).toBe(3000);
-  });
-
   it('insurance premium total is 36110', function () {
-    expect(calculator.getPremiumTotal()).toBe(281000);
+    expect(calculator.getPremiumTotal()).toBe(278000);
   });
 
 });
