@@ -24,7 +24,7 @@ var Calculator = cls.extend({
     driver_ages,            // Возраст
     installments,           // Рассрочка платежаб
     trailer,                // С прицепом
-    bank,                   // Банк
+    is_car_loan,            // Кредитное ТС
     insurance_money_dsago,  // Страховая сумма по ДСАГО
     insurance_money_fortune,// Страховая сумма по ДСАГО
     insured_num_fortune     // Число застрахованных
@@ -51,7 +51,16 @@ var Calculator = cls.extend({
     });
     this.installments = installments;
     this.trailer = trailer;
-    this.bank = bank;
+
+    // Любой банк
+    if (is_car_loan) {
+      // Здесь может быть любая непустая строка кроме "РГС Банк"
+      this.bank = 'любой';
+    // Нет банка
+    } else {
+      this.bank = '';
+    }
+
     this.insurance_money_dsago = parseInt(insurance_money_dsago, 10);
     this.insurance_money_fortune = parseInt(insurance_money_fortune, 10);
     this.insured_num_fortune = parseInt(insured_num_fortune, 10);

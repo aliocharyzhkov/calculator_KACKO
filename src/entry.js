@@ -38,7 +38,7 @@ $(document).ready(function () {
       ages,
       $('[name="installments"]').val(),
       $('[name="trailer"]').is(':checked'),
-      $('[name="bank"]').val(),
+      $('[name="is_car_loan"]').is(':checked'),
       $('[name="insurance_money_dsago"]').val(),
       $('[name="insurance_money_fortune"]').val(),
       $('[name="insured_num_fortune"]').val()
