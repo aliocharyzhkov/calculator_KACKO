@@ -190,7 +190,7 @@ var Calculator = cls.extend({
     return (this.getTariff() * 100).toFixed(2) + '%';
   },
   getPremium: function () {
-    return parseInt(this.getTariff().toFixed(4) * this.insurance_money, 10);
+    return Math.round(this.getTariff().toFixed(4) * this.insurance_money);
   },
   getPremiumDsago: function () {
     if (!this.insurance_money_dsago) {
@@ -257,7 +257,7 @@ var Calculator = cls.extend({
       }
     };
 
-    return parseInt(coefficients[this.region][this.trailer ? 1 : 0][this.insurance_money_dsago], 10);
+    return Math.round(coefficients[this.region][this.trailer ? 1 : 0][this.insurance_money_dsago]);
   },
   getPremiumTotal: function () {
     return this.getPremium() + this.getPremiumDsago();
