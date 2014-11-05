@@ -67,7 +67,7 @@ var Calculator = cls.extend({
       this.action = 2;
     } else if (this.insurance_type === "Премиальный") {
       this.action = 3;
-    } else {
+    } else if (this.insurance_type !== "Защита" && this.insurance_type !== "Мини каско") {
       throw "Invalid insurance_type";
     }
   },
@@ -109,79 +109,128 @@ var Calculator = cls.extend({
 
     group = new Model(this.mark, this.model).getGroup();
 
-    base_tariff = BaseTariff.calculate(group, Car.getAge(this.year, this.is_new, this.is_longation), this.region);
+    if (this.insurance_type === "Мини каско") {
+      var econom_rate;
 
-    K1 = Coefficient.getK1({
-      client_type: this.client_type,
-      is_multidrive: this.is_multidrive,
-      group: group,
-      region: this.region,
-      franchise: this.franchise,
-      ds_restrict: this.ds_restrict,
-      driver_ages: this.driver_ages,
-      driver_expreriences: this.driver_expreriences
-    });
+      switch (this.model) {
+        case "Auris":
+          econom_rate = 3.55;
+          break;
+        case "Corolla":
+          econom_rate = 3.55;
+          break;
+        case "Verso":
+          econom_rate = 3.55;
+          break;
+        case "Prius":
+          econom_rate = 3.55;
+          break;
+        case "Camry":
+          econom_rate = 4.15;
+          break;
+        case "RAV 4":
+          econom_rate = 2.25;
+          break;
+        case "Highlander":
+          econom_rate = 3.3;
+          break;
+        case "Venza":
+          econom_rate = 4.15;
+          break;
+        case "Hilux":
+          econom_rate = 4.15;
+          break;
+        case "Land Cruiser 150 Prado":
+          econom_rate = 2;
+          break;
+        case "Land Cruiser 200":
+          econom_rate = 2.55;
+          break;
+        default:
+          throw "Unknown model for program Экономный";
+      }
 
-    K1d = Coefficient.getK1d({
-      client_type: this.client_type,
-      is_multidrive: this.is_multidrive,
-      group: group,
-      region: this.region,
-      franchise: this.franchise,
-      drivers_num: this.drivers_num,
-      driver_ages: this.driver_ages,
-      driver_expreriences: this.driver_expreriences
-    });
+      final_tariff = econom_rate / 100;
+    } else {
+      base_tariff = BaseTariff.calculate(group, Car.getAge(this.year, this.is_new, this.is_longation), this.region);
 
-    K3 = Coefficient.getK3({
-      installments: this.installments,
-      period: period
-    });
+      K1 = Coefficient.getK1({
+        client_type: this.client_type,
+        is_multidrive: this.is_multidrive,
+        group: group,
+        region: this.region,
+        franchise: this.franchise,
+        ds_restrict: this.ds_restrict,
+        driver_ages: this.driver_ages,
+        driver_expreriences: this.driver_expreriences
+      });
 
-    K4 = Coefficient.getK4({
-      group: group,
-      franchise: this.franchise,
-      client_type: this.client_type,
-      bank: this.bank
-    });
+      K1d = Coefficient.getK1d({
+        client_type: this.client_type,
+        is_multidrive: this.is_multidrive,
+        group: group,
+        region: this.region,
+        franchise: this.franchise,
+        drivers_num: this.drivers_num,
+        driver_ages: this.driver_ages,
+        driver_expreriences: this.driver_expreriences
+      });
 
-    Kp = Coefficient.getKp({
-      region: this.region,
-      group: group
-    });
+      K3 = Coefficient.getK3({
+        installments: this.installments,
+        period: period
+      });
 
-    Kc = Coefficient.getKc({
-      installments: this.installments,
-      discount_kv: this.discount_kv
-    });
+      K4 = Coefficient.getK4({
+        group: group,
+        franchise: this.franchise,
+        client_type: this.client_type,
+        bank: this.bank
+      });
 
-    Kap = Coefficient.getKap({
-      region: this.region,
-      mark: this.mark,
-      model: this.model
-    });
+      Kp = Coefficient.getKp({
+        region: this.region,
+        group: group
+      });
 
-    Kpc = Coefficient.getKpc({
-      installments: this.installments
-    });
+      Kc = Coefficient.getKc({
+        installments: this.installments,
+        discount_kv: this.discount_kv
+      });
 
-    Kb = Coefficient.getKb({
-      bank: this.bank,
-      client_type: this.client_type,
-      region: this.region
-    });
+      Kap = Coefficient.getKap({
+        region: this.region,
+        mark: this.mark,
+        model: this.model
+      });
 
-    Kprogram = Coefficient.getKprogram({
-      region: this.region,
-      action: this.action,
-      no_pss: this.no_pss,
-      model: this.model
-    });
+      Kpc = Coefficient.getKpc({
+        installments: this.installments
+      });
 
-    final_tariff = (base_tariff / 100) * K1 * K1d * K2 * K3 * K4 * K5 * K6 * K7A * Kp * Kc * Ku * Ka * Kap * Kpc * Knp * Kprisk * Kb * Kprogram;
+      Kb = Coefficient.getKb({
+        bank: this.bank,
+        client_type: this.client_type,
+        region: this.region
+      });
 
-    if (this.gap) {
-      final_tariff += 0.009;
+      final_tariff = (base_tariff / 100) * K1 * K1d * K2 * K3 * K4 * K5 * K6 * K7A * Kp * Kc * Ku * Ka * Kap * Kpc * Knp * Kprisk * Kb;
+
+      // Четвертая программа отличается от первых трех тем,
+      // что в ней отсутствует коэффициент программы
+      if (this.insurance_type !== "Защита") {
+        Kprogram = Coefficient.getKprogram({
+          region: this.region,
+          action: this.action,
+          no_pss: this.no_pss,
+          model: this.model
+        });
+        final_tariff *= Kprogram;
+      }
+
+      if (this.gap) {
+        final_tariff += 0.009;
+      }
     }
 
     return final_tariff;

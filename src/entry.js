@@ -40,10 +40,14 @@ $(document).ready(function () {
       $('[name="insurance_money_dsago"]').val()
     );
 
-    $('.insurance_tariff').html(calculator.getTariffPercent());
-    $('.insurance_premium').html(calculator.getPremium());
-    $('.insurance_premium_dsago').html(calculator.getPremiumDsago());
-    $('.insurance_premium_total').html(calculator.getPremiumTotal());
+    try {
+      $('.insurance_tariff').html(calculator.getTariffPercent());
+      $('.insurance_premium').html(calculator.getPremium());
+      $('.insurance_premium_dsago').html(calculator.getPremiumDsago());
+      $('.insurance_premium_total').html(calculator.getPremiumTotal());
+    } catch (e) {
+      alert(e);
+    }
   });
 
 
