@@ -102,7 +102,8 @@ describe('Find coefficients', function () {
     coef = Coefficient.getKap({
       region: "Москва и МО",
       mark: "Toyota",
-      model: "Auris"
+      model: "Auris",
+      age: 0
     });
     expect(coef).toBe(1.12);
   });

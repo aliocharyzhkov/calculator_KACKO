@@ -86,10 +86,14 @@
 	      $('[name="insurance_money_dsago"]').val()
 	    );
 
-	    $('.insurance_tariff').html(calculator.getTariffPercent());
-	    $('.insurance_premium').html(calculator.getPremium());
-	    $('.insurance_premium_dsago').html(calculator.getPremiumDsago());
-	    $('.insurance_premium_total').html(calculator.getPremiumTotal());
+	    try {
+	      $('.insurance_tariff').html(calculator.getTariffPercent());
+	      $('.insurance_premium').html(calculator.getPremium());
+	      $('.insurance_premium_dsago').html(calculator.getPremiumDsago());
+	      $('.insurance_premium_total').html(calculator.getPremiumTotal());
+	    } catch (e) {
+	      alert(e);
+	    }
 	  });
 
 
@@ -171,7 +175,7 @@
 	      this.action = 2;
 	    } else if (this.insurance_type === "Премиальный") {
 	      this.action = 3;
-	    } else {
+	    } else if (this.insurance_type !== "Защита" && this.insurance_type !== "Мини каско") {
 	      throw "Invalid insurance_type";
 	    }
 	  },
@@ -213,79 +217,129 @@
 
 	    group = new Model(this.mark, this.model).getGroup();
 
-	    base_tariff = BaseTariff.calculate(group, Car.getAge(this.year, this.is_new, this.is_longation), this.region);
+	    if (this.insurance_type === "Мини каско") {
+	      var econom_rate;
 
-	    K1 = Coefficient.getK1({
-	      client_type: this.client_type,
-	      is_multidrive: this.is_multidrive,
-	      group: group,
-	      region: this.region,
-	      franchise: this.franchise,
-	      ds_restrict: this.ds_restrict,
-	      driver_ages: this.driver_ages,
-	      driver_expreriences: this.driver_expreriences
-	    });
+	      switch (this.model) {
+	        case "Auris":
+	          econom_rate = 3.55;
+	          break;
+	        case "Corolla":
+	          econom_rate = 3.55;
+	          break;
+	        case "Verso":
+	          econom_rate = 3.55;
+	          break;
+	        case "Prius":
+	          econom_rate = 3.55;
+	          break;
+	        case "Camry":
+	          econom_rate = 4.15;
+	          break;
+	        case "RAV 4":
+	          econom_rate = 2.25;
+	          break;
+	        case "Highlander":
+	          econom_rate = 3.3;
+	          break;
+	        case "Venza":
+	          econom_rate = 4.15;
+	          break;
+	        case "Hilux":
+	          econom_rate = 4.15;
+	          break;
+	        case "Land Cruiser 150 Prado":
+	          econom_rate = 2;
+	          break;
+	        case "Land Cruiser 200":
+	          econom_rate = 2.55;
+	          break;
+	        default:
+	          throw "Unknown model for program Экономный";
+	      }
 
-	    K1d = Coefficient.getK1d({
-	      client_type: this.client_type,
-	      is_multidrive: this.is_multidrive,
-	      group: group,
-	      region: this.region,
-	      franchise: this.franchise,
-	      drivers_num: this.drivers_num,
-	      driver_ages: this.driver_ages,
-	      driver_expreriences: this.driver_expreriences
-	    });
+	      final_tariff = econom_rate / 100;
+	    } else {
+	      base_tariff = BaseTariff.calculate(group, Car.getAge(this.year, this.is_new, this.is_longation), this.region);
 
-	    K3 = Coefficient.getK3({
-	      installments: this.installments,
-	      period: period
-	    });
+	      K1 = Coefficient.getK1({
+	        client_type: this.client_type,
+	        is_multidrive: this.is_multidrive,
+	        group: group,
+	        region: this.region,
+	        franchise: this.franchise,
+	        ds_restrict: this.ds_restrict,
+	        driver_ages: this.driver_ages,
+	        driver_expreriences: this.driver_expreriences
+	      });
 
-	    K4 = Coefficient.getK4({
-	      group: group,
-	      franchise: this.franchise,
-	      client_type: this.client_type,
-	      bank: this.bank
-	    });
+	      K1d = Coefficient.getK1d({
+	        client_type: this.client_type,
+	        is_multidrive: this.is_multidrive,
+	        group: group,
+	        region: this.region,
+	        franchise: this.franchise,
+	        drivers_num: this.drivers_num,
+	        driver_ages: this.driver_ages,
+	        driver_expreriences: this.driver_expreriences
+	      });
 
-	    Kp = Coefficient.getKp({
-	      region: this.region,
-	      group: group
-	    });
+	      K3 = Coefficient.getK3({
+	        installments: this.installments,
+	        period: period
+	      });
 
-	    Kc = Coefficient.getKc({
-	      installments: this.installments,
-	      discount_kv: this.discount_kv
-	    });
+	      K4 = Coefficient.getK4({
+	        group: group,
+	        franchise: this.franchise,
+	        client_type: this.client_type,
+	        bank: this.bank
+	      });
 
-	    Kap = Coefficient.getKap({
-	      region: this.region,
-	      mark: this.mark,
-	      model: this.model
-	    });
+	      Kp = Coefficient.getKp({
+	        region: this.region,
+	        group: group
+	      });
 
-	    Kpc = Coefficient.getKpc({
-	      installments: this.installments
-	    });
+	      Kc = Coefficient.getKc({
+	        installments: this.installments,
+	        discount_kv: this.discount_kv
+	      });
 
-	    Kb = Coefficient.getKb({
-	      bank: this.bank,
-	      client_type: this.client_type,
-	      region: this.region
-	    });
+	      Kap = Coefficient.getKap({
+	        region: this.region,
+	        mark: this.mark,
+	        model: this.model,
+	        age: Car.getAge(this.year, this.is_new, this.is_longation)
+	      });
 
-	    Kprogram = Coefficient.getKprogram({
-	      region: this.region,
-	      action: this.action,
-	      no_pss: this.no_pss,
-	      model: this.model
-	    });
+	      Kpc = Coefficient.getKpc({
+	        installments: this.installments
+	      });
 
-	    final_tariff = (base_tariff / 100) * K1 * K1d * K2 * K3 * K4 * K5 * K6 * K7A * Kp * Kc * Ku * Ka * Kap * Kpc * Knp * Kprisk * Kb * Kprogram;
+	      Kb = Coefficient.getKb({
+	        bank: this.bank,
+	        client_type: this.client_type,
+	        region: this.region
+	      });
 
-	    if (this.gap) {
-	      final_tariff += 0.009;
+	      final_tariff = (base_tariff / 100) * K1 * K1d * K2 * K3 * K4 * K5 * K6 * K7A * Kp * Kc * Ku * Ka * Kap * Kpc * Knp * Kprisk * Kb;
+
+	      // Четвертая программа отличается от первых трех тем,
+	      // что в ней отсутствует коэффициент программы
+	      if (this.insurance_type !== "Защита") {
+	        Kprogram = Coefficient.getKprogram({
+	          region: this.region,
+	          action: this.action,
+	          no_pss: this.no_pss,
+	          model: this.model
+	        });
+	        final_tariff *= Kprogram;
+	      }
+
+	      if (this.gap) {
+	        final_tariff += 0.009;
+	      }
 	    }
 
 	    return final_tariff;
@@ -294,7 +348,7 @@
 	    return (this.getTariff() * 100).toFixed(2) + '%';
 	  },
 	  getPremium: function () {
-	    return parseInt(this.getTariff().toFixed(4) * this.insurance_money, 10);
+	    return Math.round(this.getTariff().toFixed(4) * this.insurance_money);
 	  },
 	  getPremiumDsago: function () {
 	    if (!this.insurance_money_dsago) {
@@ -361,7 +415,7 @@
 	      }
 	    };
 
-	    return parseInt(coefficients[this.region][this.trailer ? 1 : 0][this.insurance_money_dsago], 10);
+	    return Math.round(coefficients[this.region][this.trailer ? 1 : 0][this.insurance_money_dsago]);
 	  },
 	  getPremiumTotal: function () {
 	    return this.getPremium() + this.getPremiumDsago();
@@ -776,21 +830,23 @@
 	  var region = input.region,
 	      mark =   input.mark,
 	      model =  input.model,
-	      key = region + ' ' + mark + ' ' + model;
+	      age =    input.age,
+	      key = region + ' ' + mark + ' ' + model,
+	      Kap;
 
 	  // Внимание! список неполный
 	  // TODO: дозаполнить таблицу 'Кар!A2:B1000
 	  var coefficients = {
-	    "Москва и МО Toyota Auris": 1.12,
-	    "Москва и МО Toyota Avensis": 1.32,
-	    "Москва и МО Toyota Camry": 1.4,
-	    "Москва и МО Toyota Corolla": 1.28,
-	    "Москва и МО Toyota Highlander": 0.8,
-	    "Москва и МО Toyota Hilux": 1.19,
-	    "Москва и МО Toyota Land Cruiser 150 Prado": 1.05,
-	    "Москва и МО Toyota Land Cruiser 200": 1.08,
-	    "Москва и МО Toyota RAV 4": 1.18,
-	    "Москва и МО Toyota Verso": 1.31,
+	    "Москва и МО Toyota Auris": [1.12, 1.12],
+	    "Москва и МО Toyota Avensis": [1.32, 1.32],
+	    "Москва и МО Toyota Camry": [1.55, 1.4],
+	    "Москва и МО Toyota Corolla": [1.28, 1.28],
+	    "Москва и МО Toyota Highlander": [0.8, 0.8],
+	    "Москва и МО Toyota Hilux": [1.19, 1.19],
+	    "Москва и МО Toyota Land Cruiser 150 Prado": [1.05, 1.05],
+	    "Москва и МО Toyota Land Cruiser 200": [1.16, 1.08],
+	    "Москва и МО Toyota RAV 4": [1.18, 1.18],
+	    "Москва и МО Toyota Verso": [1.31, 1.31],
 	    "Санкт-Петербург и область Toyota Auris": 1.18,
 	    "Санкт-Петербург и область Toyota Avensis": 1.29,
 	    "Санкт-Петербург и область Toyota Camry": 1.71,
@@ -814,7 +870,12 @@
 	    "Тюменская область Toyota Verso": 1.19
 	  };
 
-	  return coefficients[key] ? coefficients[key] : 1;
+	  Kap =  coefficients[key] ? coefficients[key] : 1;
+	  if (typeof Kap === "object") {
+	    Kap = Kap[age];
+	  }
+
+	  return Kap;
 	};
 
 	exports.getKpc = function (input) {

@@ -226,21 +226,23 @@ exports.getKap = function (input) {
   var region = input.region,
       mark =   input.mark,
       model =  input.model,
-      key = region + ' ' + mark + ' ' + model;
+      age =    input.age,
+      key = region + ' ' + mark + ' ' + model,
+      Kap;
 
   // Внимание! список неполный
   // TODO: дозаполнить таблицу 'Кар!A2:B1000
   var coefficients = {
-    "Москва и МО Toyota Auris": 1.12,
-    "Москва и МО Toyota Avensis": 1.32,
-    "Москва и МО Toyota Camry": 1.4,
-    "Москва и МО Toyota Corolla": 1.28,
-    "Москва и МО Toyota Highlander": 0.8,
-    "Москва и МО Toyota Hilux": 1.19,
-    "Москва и МО Toyota Land Cruiser 150 Prado": 1.05,
-    "Москва и МО Toyota Land Cruiser 200": 1.08,
-    "Москва и МО Toyota RAV 4": 1.18,
-    "Москва и МО Toyota Verso": 1.31,
+    "Москва и МО Toyota Auris": [1.12, 1.12],
+    "Москва и МО Toyota Avensis": [1.32, 1.32],
+    "Москва и МО Toyota Camry": [1.55, 1.4],
+    "Москва и МО Toyota Corolla": [1.28, 1.28],
+    "Москва и МО Toyota Highlander": [0.8, 0.8],
+    "Москва и МО Toyota Hilux": [1.19, 1.19],
+    "Москва и МО Toyota Land Cruiser 150 Prado": [1.05, 1.05],
+    "Москва и МО Toyota Land Cruiser 200": [1.16, 1.08],
+    "Москва и МО Toyota RAV 4": [1.18, 1.18],
+    "Москва и МО Toyota Verso": [1.31, 1.31],
     "Санкт-Петербург и область Toyota Auris": 1.18,
     "Санкт-Петербург и область Toyota Avensis": 1.29,
     "Санкт-Петербург и область Toyota Camry": 1.71,
@@ -264,7 +266,12 @@ exports.getKap = function (input) {
     "Тюменская область Toyota Verso": 1.19
   };
 
-  return coefficients[key] ? coefficients[key] : 1;
+  Kap =  coefficients[key] ? coefficients[key] : 1;
+  if (typeof Kap === "object") {
+    Kap = Kap[age];
+  }
+
+  return Kap;
 };
 
 exports.getKpc = function (input) {

@@ -201,7 +201,8 @@ var Calculator = cls.extend({
       Kap = Coefficient.getKap({
         region: this.region,
         mark: this.mark,
-        model: this.model
+        model: this.model,
+        age: Car.getAge(this.year, this.is_new, this.is_longation)
       });
 
       Kpc = Coefficient.getKpc({
