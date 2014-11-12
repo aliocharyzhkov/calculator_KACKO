@@ -234,7 +234,10 @@ var Calculator = cls.extend({
       }
     }
 
-    return final_tariff;
+    // Важно! Округлем до 6 цифр после запятой,
+    // иначе результат может расходиться с экселевским калькулятором
+    // в сотых Базового тарифа.
+    return 1 * final_tariff.toFixed(6);
   },
   getTariffPercent: function () {
     return (this.getTariff() * 100).toFixed(2) + '%';

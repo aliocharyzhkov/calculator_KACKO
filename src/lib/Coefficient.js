@@ -232,16 +232,17 @@ exports.getKap = function (input) {
 
   // Внимание! список неполный
   // TODO: дозаполнить таблицу 'Кар!A2:B1000
+  // UPD 11.11.2014 Коэффициенты изменились
   var coefficients = {
-    "Москва и МО Toyota Auris": [1.12, 1.12],
-    "Москва и МО Toyota Avensis": [1.32, 1.32],
-    "Москва и МО Toyota Camry": [1.55, 1.4],
-    "Москва и МО Toyota Corolla": [1.28, 1.28],
-    "Москва и МО Toyota Highlander": [0.8, 0.8],
-    "Москва и МО Toyota Hilux": [1.19, 1.19],
-    "Москва и МО Toyota Land Cruiser 150 Prado": [1.05, 1.05],
-    "Москва и МО Toyota Land Cruiser 200": [1.16, 1.08],
-    "Москва и МО Toyota RAV 4": [1.18, 1.18],
+    "Москва и МО Toyota Auris": [1.4, 1.4],
+    "Москва и МО Toyota Avensis": [1.58, 1.58],
+    "Москва и МО Toyota Camry": [1.71, 1.55],
+    "Москва и МО Toyota Corolla": [1.34, 1.34],
+    "Москва и МО Toyota Highlander": [0.95, 0.95],
+    "Москва и МО Toyota Hilux": [1.35, 1.35],
+    "Москва и МО Toyota Land Cruiser 150 Prado": [1.27, 1.27],
+    "Москва и МО Toyota Land Cruiser 200": [1.3, 1.28],
+    "Москва и МО Toyota RAV 4": [1.25, 1.25],
     "Москва и МО Toyota Verso": [1.31, 1.31],
     "Санкт-Петербург и область Toyota Auris": 1.18,
     "Санкт-Петербург и область Toyota Avensis": 1.29,
@@ -260,8 +261,8 @@ exports.getKap = function (input) {
     "Тюменская область Toyota Corolla": 1.18,
     "Тюменская область Toyota Highlander": 0.93,
     "Тюменская область Toyota Hilux": 1.08,
-    "Тюменская область Toyota Land Cruiser 150 Prado": 0.9,
-    "Тюменская область Toyota Land Cruiser 200": 0.83,
+    "Тюменская область Toyota Land Cruiser 150 Prado": 0.94,
+    "Тюменская область Toyota Land Cruiser 200": 0.9,
     "Тюменская область Toyota RAV 4": 1.1,
     "Тюменская область Toyota Verso": 1.19
   };

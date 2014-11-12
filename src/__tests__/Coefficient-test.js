@@ -98,14 +98,14 @@ describe('Find coefficients', function () {
     expect(coef).toBe(1);
   });
 
-  it('Kap equals 1.12', function () {
+  it('Kap equals 1.4', function () {
     coef = Coefficient.getKap({
       region: "Москва и МО",
       mark: "Toyota",
       model: "Auris",
       age: 0
     });
-    expect(coef).toBe(1.12);
+    expect(coef).toBe(1.4);
   });
 
   it('Kb equals 1.1', function () {
@@ -136,4 +136,13 @@ describe('Find coefficients', function () {
     expect(coef).toBe(1.02);
   });
 
+  it('Kprogram equals 1.05', function () {
+    coef = Coefficient.getKprogram({
+      action: 1,
+      region: "Санкт-Петербург и область",
+      no_pss: true,
+      model: "Verso"
+    });
+    expect(coef).toBe(1.05);
+  });
 });

@@ -24,24 +24,16 @@ describe('Find final_tariff', function () {
     1000000
   );
 
-  it('base_tariff is 0.090702', function () {
-    expect(calculator.getTariff()).toBe(0.090702);
+  it('base_tariff is 0.09825', function () {
+    expect(1 * calculator.getTariff().toFixed(5)).toBe(0.09825);
   });
 
-  it('base_tariff percent is 9.07%', function () {
-    expect(calculator.getTariffPercent()).toBe('9.07%');
+  it('base_tariff percent is 9.83%', function () {
+    expect(calculator.getTariffPercent()).toBe('9.83%');
   });
 
-  it('insurance premium is 272100', function () {
-    expect(calculator.getPremium()).toBe(272100);
-  });
-
-  it('insurance premium dsago is 5900', function () {
-    expect(calculator.getPremiumDsago()).toBe(5900);
-  });
-
-  it('insurance premium total is 36110', function () {
-    expect(calculator.getPremiumTotal()).toBe(278000);
+  it('insurance premium is 294900', function () {
+    expect(calculator.getPremium()).toBe(294900);
   });
 
 });
