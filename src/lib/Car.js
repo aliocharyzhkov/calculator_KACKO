@@ -16,12 +16,14 @@ var Car = cls.extend({
     getAge: function (year, is_new, is_longation) {
       var age;
 
-      // Логика вычисления возраста машины вызвала вопросы,
-      // особенно захардкоденное значение -- 2013.
-      if (year == 2013 && is_longation) {
+      // Каждый год нужно менять значения этих констант
+      var LAST_YEAR = 2014;
+      var MAGIC_DATE = '2015-06-30';
+
+      if (year == LAST_YEAR && is_longation) {
         age = 1;
       } else {
-        if (year == 2013 && is_new && moment() <= moment('2014-06-30')) {
+        if (year == LAST_YEAR && is_new && moment() <= moment(MAGIC_DATE)) {
           age = 0;
         } else {
           age = moment().year() - year;
